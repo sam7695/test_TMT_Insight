@@ -219,3 +219,23 @@ class InventoryTypeRetrieveUpdateDestroyView(APIView):
     
     def get_queryset(self, **kwargs):
         return self.queryset.get(**kwargs)
+    
+# My view that lists inventory items created after a certain day.
+class InventoryListAfterDateView(APIView):
+    '''
+    View to list inventory items created after a certain date
+    '''
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+    
+    def get(self, request: Request, *args, **kwargs) -> Response:
+        date = request.query_params.get('date')
+        if not date:
+            return Response({'error': 'date is required'}, status=400)
+        
+        serializer = self.serializer_class(self.get_queryset(date=date), many=True)
+        
+        return Response(serializer.data, status=200)
+    
+    def get_queryset(self, **kwargs):
+        return self.queryset.filter(created_at__gte=kwargs['date'])
