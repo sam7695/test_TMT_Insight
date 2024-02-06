@@ -563,7 +563,7 @@ inventory_items = [
                 year=2001,
                 actors=['Elijah Wood', 'Ian McKellen', 'Viggo Mortensen'],
                 imdb_rating=8.8,
-                rotten_toamtoes_rating=91,
+                rotten_tomatoes_rating=91,
             )
         ),
         [inventory_tag_dict['Adventure']]
